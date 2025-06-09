@@ -1,0 +1,22 @@
+.share-options {
+	display: flex;
+	gap: 8px;
+	flex-wrap: wrap;
+	margin-top: 5px;
+}
+
+.share-options a {
+	background-color: #f0f0f0;
+	padding: 5px 10px;
+	border-radius: 5px;
+	text-decoration: none;
+	color: #333;
+	font-size: 12px;
+}
+
+.share-button {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	color: #007bff;
+}
