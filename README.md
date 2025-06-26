@@ -27,7 +27,7 @@ SkyVault is a cloud-based file storage solution designed for secure, efficient, 
 
 | Layer        | Technology              |
 |--------------|--------------------------|
-| **Frontend** | HTML, CSS, JavaScript    |
+| **Frontend** | HTML, CSS, ReactJs    |
 | **Backend**  | Node.js, Express.js      |
 | **Database** | MongoDB                  |
 | **Cloud**    | AWS S3 (File Storage)    |
@@ -35,5 +35,83 @@ SkyVault is a cloud-based file storage solution designed for secure, efficient, 
 
 ---
 
-## 📁 Project Structure
+## 🛡️ Security
 
+- Secrets are stored in `.env` (excluded from version control)
+- AWS credentials are never pushed to GitHub
+- Role-based access control (RBAC)
+- Input validation and sanitization
+
+---
+
+## ⚙️ How to Use SkyVault on Another System
+
+Follow these steps to clone, configure, and run SkyVault on a new machine.
+
+---
+
+### 🧾 1. Prerequisites
+
+Ensure the following are installed:
+
+- [Node.js (v14+)](https://nodejs.org/)
+- [MongoDB](https://www.mongodb.com/)
+- [Git](https://git-scm.com/)
+- [AWS Account](https://aws.amazon.com/) (for S3 integration)
+
+---
+
+### 📦 2. Clone the Repository
+
+git clone https://github.com/Dartpixel/skyvault.git
+
+cd skyvault
+
+cd backend
+
+npm install
+
+cd frontend
+
+npm install
+
+### Create your .env file in /backend and set environment variables
+
+touch .env
+
+PORT=5000
+
+MONGODB_URI=your_mongo_uri
+
+JWT_SECRET=your_jwt_secret
+
+AWS_ACCESS_KEY_ID=your_aws_key
+
+AWS_SECRET_ACCESS_KEY=your_aws_secret
+
+AWS_REGION=your_aws_region
+
+S3_BUCKET_NAME=your_bucket_name
+
+### Now run these command for frontned and backend
+npm start and npm run dev
+
+## 📬 Feedback and Contribution
+
+We welcome contributions and suggestions. Feel free to:
+
+- 📌 [Submit a pull request](https://github.com/Dartpixel/skyvault/pulls)
+- 🐞 [Create an issue](https://github.com/Dartpixel/skyvault/issues)
+- 💬 Share feedback directly through the app’s feedback form
+
+Your input helps us improve SkyVault continuously!
+
+---
+
+## 🧑‍💻 Author
+
+**Kartik Sharma**  
+Developer | Tech Enthusiast
+📧 Reach me on [LinkedIn](https://www.linkedin.com/in/kartiksharma2004/)
+
+---
