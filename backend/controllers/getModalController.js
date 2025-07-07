@@ -10,22 +10,39 @@ const s3 = new AWS.S3({
 });
 
 const listFiles = async (req, res) => {
-    try {
-        const userId = req.user._id;
-        const userFiles = await File.find({ userId }).select('-__v');
-        const files = userFiles.map(file => ({
-            name: file.fileName,
-            key: file.key,
-            location: file.location,
-            createdAt: file.createdAt,
-        }));
+    const userId = req.user._id;
+    const search = req.query.search || "";
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const skip = (page - 1) * limit;
 
-        res.status(200).json(files);
-    } catch (error) {
-        console.error('Error listing files:', error);
-        res.status(500).json({ error: 'Failed to list user files' });
-    }
+    const query = {
+        userId,
+        fileName: { $regex: search, $options: 'i' }
+    };
+
+    const totalFiles = await File.countDocuments(query);
+    const userFiles = await File.find(query)
+        .select('-__v')
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit);
+
+    const files = userFiles.map(file => ({
+        name: file.fileName,
+        key: file.key,
+        location: file.location,
+        createdAt: file.createdAt,
+    }));
+
+    res.status(200).json({
+        files,
+        totalFiles,
+        totalPages: Math.ceil(totalFiles / limit),
+        currentPage: page,
+    });
 };
+
 
 // 2. Download a specific file
 const downloadFile = async (req, res) => {

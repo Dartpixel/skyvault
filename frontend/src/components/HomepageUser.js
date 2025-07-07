@@ -153,37 +153,35 @@ function HomepageUser() {
             </aside>
             <main className="main-content">
                 <header className="dashboard-header">
-                    {/* Header content */}
-                    <div className="search-bar">
-                        <i className="fas fa-search"></i>
-                        <input type="text" placeholder="Search files..." />
-                    </div>
-                    <div className="header-right">
-                        <button className="upload-btn" onClick={() => {
-                            setShowModal(true);
-                        }}>
-                            <i className="fas fa-upload"></i> Upload
-                            {showModal && <UploadModal onClose={() => setShowModal(false)} />}
-                        </button>
-                        <div className="profile-dropdown">
-                            <button className="profile-btn" onClick={() => setIsOpen(!isOpen)}>
-                                <img src={account} alt="Profile" className="profile-pic" />
-                                <span className="username">{username}</span>
-                                <i className="fas fa-chevron-down"></i>
-                            </button>
-                            {isOpen && (
-                                <div className="dropdown-menu">
-                                    <a href="homepage-user" className='profile'>
-                                        <i className="fas fa-user"></i> Profile
-                                    </a>
-                                    <a href="/login-user" className="logout" onClick={logOutUser}>
-                                        <i className="fas fa-sign-out-alt"></i> Logout
-                                    </a>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </header>
+    <div style={{ flex: 1 }}></div>
+
+    <div className="header-right">
+        <button className="upload-btn" onClick={() => setShowModal(true)}>
+            <i className="fas fa-upload"></i> Upload
+            {showModal && <UploadModal onClose={() => setShowModal(false)} />}
+        </button>
+
+        <div className="profile-dropdown">
+            <button className="profile-btn" onClick={() => setIsOpen(!isOpen)}>
+                <img src={account} alt="Profile" className="profile-pic" />
+                <span className="username">{username}</span>
+                <i className="fas fa-chevron-down"></i>
+            </button>
+
+            {isOpen && (
+                <div className="dropdown-menu">
+                    <a href="homepage-user" className='profile'>
+                        <i className="fas fa-user"></i> Profile
+                    </a>
+                    <a href="/login-user" className="logout" onClick={logOutUser}>
+                        <i className="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            )}
+        </div>
+    </div>
+</header>
+
                 <div className="dashboard-content">
                     <div className="welcome-banner">
                         <h1>

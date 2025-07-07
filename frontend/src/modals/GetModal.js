@@ -7,35 +7,36 @@ function GetModal({ onClose }) {
     const modalRef = useRef();
     const [files, setFiles] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    //pagination state
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
-        fetchFiles();
-    }, []);
-
     const fetchFiles = async () => {
-        let token = getCookieForEntity("token", "token");
-        if (token?.startsWith("Bearer ")) token = token.replace("Bearer ", "");
+    let token = getCookieForEntity("token", "token");
+    if (token?.startsWith("Bearer ")) token = token.replace("Bearer ", "");
 
-        try {
-            const response = await fetch('http://localhost:5000/api/uploads', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-
-            const data = await response.json();
-
-            if (Array.isArray(data)) {
-                setFiles(data);
-            } else {
-                console.error('Expected array but got:', data);
-                setFiles([]);
+    try {
+        const response = await fetch(`http://localhost:5000/api/uploads?page=${page}&limit=5&search=${searchTerm}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
             }
-        } catch (error) {
-            console.error('Error fetching files:', error);
+        });
+
+        const data = await response.json();
+        if (Array.isArray(data.files)) {
+            setFiles(data.files);
+            setTotalPages(data.totalPages || 1);
+        } else {
             setFiles([]);
         }
-    };
+    } catch (err) {
+        console.error('Fetch error', err);
+    }
+};
+
+    fetchFiles();
+}, [page, searchTerm]);
 
 
 
@@ -153,6 +154,30 @@ function GetModal({ onClose }) {
                         })}
                     </tbody>
                 </table>
+                
+
+<div className="pagination-controls">
+    <button
+        className="pagination-button"
+        disabled={page === 1}
+        onClick={() => setPage(prev => Math.max(prev - 1, 1))}
+    >
+        Prev
+    </button>
+
+    <span className="page-info">Page {page} of {totalPages}</span>
+
+    <button
+        className="pagination-button"
+        disabled={page === totalPages}
+        onClick={() => setPage(prev => Math.min(prev + 1, totalPages))}
+    >
+        Next
+    </button>
+</div>
+
+
+
             </div>
         </div>
     );

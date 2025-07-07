@@ -6,38 +6,38 @@ import { getCookieForEntity } from "../util/axios";
 function ShareModal({ onClose }) {
     const modalRef = useRef();
     const [files, setFiles] = useState([]);
+    //pagination state
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
     const [showShareOptions, setShowShareOptions] = useState(null); // store fileName to toggle
 
-    useEffect(() => {
-        fetchFiles();
-    }, []);
-
-    const fetchFiles = async () => {
+        useEffect(() => {
+        const fetchFiles = async () => {
         let token = getCookieForEntity("token", "token");
         if (token?.startsWith("Bearer ")) token = token.replace("Bearer ", "");
-
+    
         try {
-            const response = await fetch('http://localhost:5000/api/uploads', {
+            const response = await fetch(`http://localhost:5000/api/uploads?page=${page}&limit=5&search=${searchTerm}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-
-
+    
             const data = await response.json();
-
-            if (Array.isArray(data)) {
-                setFiles(data);
+            if (Array.isArray(data.files)) {
+                setFiles(data.files);
+                setTotalPages(data.totalPages || 1);
             } else {
-                console.error('Expected array but got:', data);
                 setFiles([]);
             }
-        } catch (error) {
-            console.error('Error fetching files:', error);
-            setFiles([]);
+        } catch (err) {
+            console.error('Fetch error', err);
         }
     };
+    
+        fetchFiles();
+    }, [page, searchTerm]);
 
     const closeModal = (e) => {
         if (modalRef.current && !modalRef.current.contains(e.target)) {
@@ -126,6 +126,25 @@ function ShareModal({ onClose }) {
                         })}
                     </tbody>
                 </table>
+                <div className="pagination-controls">
+    <button
+        className="pagination-button"
+        disabled={page === 1}
+        onClick={() => setPage(prev => Math.max(prev - 1, 1))}
+    >
+        Prev
+    </button>
+
+    <span className="page-info">Page {page} of {totalPages}</span>
+
+    <button
+        className="pagination-button"
+        disabled={page === totalPages}
+        onClick={() => setPage(prev => Math.min(prev + 1, totalPages))}
+    >
+        Next
+    </button>
+</div>
             </div>
         </div>
     );
