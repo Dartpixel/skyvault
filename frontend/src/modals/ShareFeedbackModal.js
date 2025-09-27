@@ -36,7 +36,7 @@ function ShareFeedbackModal({ onClose }) {
         }
 
 
-        console.log("Token before request:", token); // ✅ Debugging step
+        console.log("Token before request:", token); // Debugging step
 
         if (!token) {
             alert("Session expired. Please log in again.");
@@ -50,7 +50,7 @@ function ShareFeedbackModal({ onClose }) {
                 formData,
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`, // ✅ Ensure it's in "Bearer" format
+                        Authorization: `Bearer ${token}`, // Ensure it's in "Bearer" format
                         "Content-Type": "application/json"
                     }
                 }

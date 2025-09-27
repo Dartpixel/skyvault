@@ -128,7 +128,7 @@ function Home() {
                             </div>
                         </div>
                         <div className="footer-bottom">
-                            <p className='white'>Made with ❤️ by MP24CSE186</p>
+                            <p className='white'>Made with ❤️ by Kartik Sharma</p>
                             <p>&copy; 2025 SkyVault. All rights reserved.</p>
                         </div>
                     </div>
